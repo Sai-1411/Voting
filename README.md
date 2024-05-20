@@ -27,4 +27,10 @@ npm install cookie-parser**
 
 11. Open any **browser** and enter the URL - **http://localhost:3000**
 
+12. To view the Results page enter the URL - **http://localhost:3000/results**
+
+13. To view the Results page in json format enter the URL - **http://localhost:3000/resultsData**
+
+14. To export the result page in excel enter the URL - **http://localhost:3000/exportResults**
+
 By following these steps diligently, you can seamlessly set up the Voting webpage and ensure smooth functionality.
