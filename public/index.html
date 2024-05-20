@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audience Poll</title>
+    <style>
+         body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(124deg, #FFC371, #E6E6FA);
+    }
+    form {
+    max-width: 400px;
+    margin: 50px auto 0 auto; /* Added margin-top of 50px to move the form down */
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(124deg, #FFC371, #E6E6FA);
+    box-shadow: 0 10px 20px rgba(55, 55, 55, 55);
+
+}
+
+input[type="text"][name="name"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+    label {
+        display: inline-flex; /* Changed to inline-flex */
+        margin-bottom: 2px;
+        margin-right: 10px; /* Added margin-right for spacing */
+        
+    }
+    input[type="text"],
+    input[type="radio"] {
+        margin-bottom: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    #message {
+        display: none;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+        #submittedMessage {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    img {
+    max-width: 400px;
+    height: auto;
+    display: block; /* Ensures the image behaves as a block element */
+    margin: 0 auto; /* Sets top and bottom margins to 0, and left and right margins to auto */
+    }
+
+    </style>
+</head>
+<body>
+    <form id="quizForm">
+        <img src="/infologo.png" width="180" height="50" >
+        <h3 style="text-align: center;">44th Annual Day 2024</h3>
+        <h3 style="text-align: center;">Audience poll to select one the best cultural program</h3>
+        <label for="name">Please enter your Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label><b>Choose any one best cultural performance:</b></label>
+        <div><br>
+            <input type="radio" id="category1" name="category" value="category1">
+            <label for="category1">Bharathanatya by <b>&nbsp;Lekha Sham</b></label><br><br>
+            <input type="radio" id="category2" name="category" value="category2">
+            <label for="category2">Solo Dance by <b>&nbsp;Santosh G H</b></label><br><br>
+            <input type="radio" id="category3" name="category" value="category3">
+            <label for="category3">Fusion Dance from <b>&nbsp;J-Gate Team</b></label><br><br>
+            <input type="radio" id="category4" name="category" value="category4">
+            <label for="category4">Solo Song by <b>&nbsp;Nihal</b></label><br><br>
+            <input type="radio" id="category5" name="category" value="category5">
+            <label for="category5">Medley Song by <b>&nbsp;Prajwala & Team</b></label><br><br>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="message">Thank you for submitting!</div>
+    <div id="submittedMessage"></div>
+
+    <script>
+        document.getElementById("quizForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+    
+            // Get form data
+            var name = document.getElementById("name").value;
+            var category = document.querySelector('input[name="category"]:checked');
+    
+            if (category) {
+                // Show submitted message
+                //document.getElementById("submittedMessage").innerText += "Thank you for submitting! " + name;
+                
+                // Show alert
+                window.alert("Your response has been submitted..Thanks for the response!!!");
+    
+                // Send form data to server
+                fetch('/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        category: category.value
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error submitting form');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log(data); // Log server response
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert("Please select a category.");
+            }
+        });
+    </script>
+    
+</body>
+</html>

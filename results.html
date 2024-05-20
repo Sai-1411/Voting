@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            margin-top: 20px;
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        img {
+            max-width: 400px;
+            height: auto;
+            display: block;
+            margin: 0 1000px;
+        }
+    </style>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    
+    <h1>Performance Poll Results <img src="/infologo.png" width="250" height="100"></h1>
+
+    <h3>Total Users: <span id="totalUsers"></span></h3>
+
+    <canvas id="resultsChart" width="400" height="180"></canvas>
+    <script>
+        // Function to fetch and display results
+        function fetchResults() {
+            fetch('/resultsData')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error fetching results');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Display total number of users
+                document.getElementById('totalUsers').textContent = data.totalUsers;
+
+                // Define category labels
+                const categoryLabels = {
+                    category1: 'Lekha Sham',
+                    category2: 'Santosh G H',
+                    category3: 'J-Gate Team',
+                    category4: 'Nihal',
+                    category5: 'Prajwala & Team'
+                };
+
+                // Map category values to category labels
+                const categories = data.categoryCounts.map(row => categoryLabels[row.category]);
+                const counts = data.categoryCounts.map(row => row.count);
+
+                // Create bar chart
+                var ctx = document.getElementById('resultsChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: categories,
+                        datasets: [{
+                            label: 'Responses',
+                            data: counts,
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                }
+                            }]
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Call fetchResults function when the page loads
+        fetchResults();
+    </script>
+</body>
+</html>
