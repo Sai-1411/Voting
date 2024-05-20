@@ -33,11 +33,11 @@ app.get('/results', (req, res) => {
 
 // Define category names
 const categoryNames = {
-    category1: 'Lekha Sham',
-    category2: 'Santosh G H',
-    category3: 'J-Gate Team',
-    category4: 'Nihal',
-    category5: 'Prajwala & Team'
+    category1: 'category1',
+    category2: 'category2',
+    category3: 'category3',
+    category4: 'category4',
+    category5: 'category5'
 };
 
 // Middleware to check if the user has already voted
