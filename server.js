@@ -6,7 +6,7 @@ const path = require('path');
 const ExcelJS = require('exceljs');
 
 const app = express();
-const port = 49153;
+const port = 3000;
 
 // Create SQLite database
 const dbPath = path.join(__dirname, 'votes.db');
@@ -158,5 +158,5 @@ app.get('/exportResults', (req, res) => {
 
 // Start server
 app.listen(port, () => {
-    console.log(`Server is running on http://192.168.10.243:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });
