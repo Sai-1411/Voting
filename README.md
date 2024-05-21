@@ -8,8 +8,8 @@
 
 4. **Library Installation**: Install necessary library files using the following commands in Command Prompt:
 
-**npm install express sqlite3 body-parser
-npm install cookie-parser**
+**1. npm install express sqlite3 body-parser ,
+2. npm install cookie-parser**
 
 5. **Folder Structure**: Maintain the following folder/files structure.
 
